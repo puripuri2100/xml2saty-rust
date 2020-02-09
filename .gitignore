@@ -1,0 +1,6 @@
+/target
+**/*.rs.bk
+xml2saty
+xml2saty.exe
+Cargo.lock
+t
