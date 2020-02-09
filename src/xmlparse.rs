@@ -55,8 +55,8 @@ fn type_paren (t:&SATySFiType, text:&str) -> String{
   }
 }
 
-fn type_semicolon (config:&&JsonValue, tag:&str) -> String{
-  let value = &config[tag];
+fn type_semicolon (config:&&JsonValue, btag:&str) -> String{
+  let value = &config[btag];
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
   match satysfi_type {
@@ -142,6 +142,23 @@ fn to_cmd (config:&&JsonValue, btag:&str, name:&str) -> String {
   }
 }
 
+fn escape (t:String) -> String {
+  let s =
+    &t.replace("\\", "\\\\")
+    .replace("{", "\\{")
+    .replace("}", "\\}")
+    .replace("<", "\\<")
+    .replace(">", "\\>")
+    .replace("%", "\\%")
+    .replace("$", "\\$")
+    .replace("#", "\\#")
+    .replace(";", "\\;")
+    .replace("|", "\\|")
+    .replace("*", "\\*")
+    .replace("@", "\\@")
+    ;
+  s.to_string()
+}
 
 
 pub fn xml2string (xml:BufReader<std::fs::File>, data:&JsonValue) -> String {
@@ -165,18 +182,18 @@ pub fn xml2string (xml:BufReader<std::fs::File>, data:&JsonValue) -> String {
             }
             Ok(XmlEvent::EndElement { name }) => {
                 let name = format!("{}",name);
-                xml_text.push_str(&format!("{}){}", type_paren_r(&config_attrib_lst,&name), type_semicolon(&config_attrib_lst,&name)));
-                stack.pop();
+                let _ = stack.pop();
+                let btag = stack.iter().last().unwrap();
+                xml_text.push_str(&format!("{}){}", type_paren_r(&config_attrib_lst,&name), type_semicolon(&config_attrib_lst,&btag)));
             }
             Ok(XmlEvent::CData(text)) => {
-              xml_text.push_str(&text);
+              ()
             }
             Ok(XmlEvent::ProcessingInstruction {name, ..}) => {
-              let t = format!("{}\n",name);
-              xml_text.push_str(&t);
+              ()
             }
             Ok(XmlEvent::Characters(text)) => {
-              let t = format!("{}\n",&text);
+              let t = format!("{}\n",&escape(text));
               xml_text.push_str(&t);
             }
             Err(e) => {
