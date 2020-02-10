@@ -1,7 +1,7 @@
 extern crate clap;
 
 use clap::{App, Arg};
-use std::fs;
+//use std::fs;
 use std::fs::File;
 use std::io::{Write, BufReader};
 
@@ -52,7 +52,7 @@ fn main() {
   let matches = app.get_matches();
 
   let mut file_name = String::new();
-  let mut xml_text = String::new();
+//  let mut xml_text = String::new();
   let mut output_name = String::new();
   let mut config_name = String::new();
   let mut package_name:Option<&str> = None;
@@ -61,13 +61,13 @@ fn main() {
 
   if let Some(file) = matches.value_of("file"){
     file_name = file.to_string();
-    let text = fs::read_to_string(file).unwrap();
-    xml_text = text;
+//    let text = fs::read_to_string(file).unwrap();
+//    xml_text = text;
       print!("Value for file: {}\n", file);
   }
 
   if let Some(text) = matches.value_of("text"){
-    xml_text = text.to_string();
+//    xml_text = text.to_string();
     print!("Value for text: {}\n", text);
   }
 
