@@ -37,3 +37,16 @@ pub fn header (v:JsonValue) -> String {
   let import_str = make_import_package(&import_list);
   format!("{}\n{}", require_str, import_str)
 }
+
+
+pub fn package (p:&Option<&str>, t:String) -> String {
+  match p {
+    None => {t}
+    Some(s) => {
+      let pvec:Vec<&str> = s.split(',').collect();
+      let m_name = pvec.iter().nth(0).unwrap_or(&"");
+      let f_name = pvec.iter().nth(1).unwrap_or(&"");
+      format!("module {} = struct\nlet {} = \n{}\nend", m_name, f_name, t,)
+    }
+  }
+}

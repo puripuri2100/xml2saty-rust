@@ -55,7 +55,7 @@ fn main() {
   let mut xml_text = String::new();
   let mut output_name = String::new();
   let mut config_name = String::new();
-  let mut package_name = String::new();
+  let mut package_name:Option<&str> = None;
 
 
 
@@ -83,14 +83,15 @@ fn main() {
   }
 
   if let Some(package) = matches.value_of("package"){
-    package_name = package.to_string();
+    package_name = Some(package);
     print!("Value for package: {}\n", package);
   }
 
   let file_xml_text = BufReader::new(File::open(&mut file_name).unwrap());
 
   let config_data = config::parse(&mut config_name);
-  let satysfi_text = xmlparse::xml2string(file_xml_text, &config_data);
+  let satysfi_text_raw = xmlparse::xml2string(file_xml_text, &config_data);
+  let satysfi_text = config::package(&mut package_name, satysfi_text_raw);
   let header_text = config::header(config_data);
 
 
