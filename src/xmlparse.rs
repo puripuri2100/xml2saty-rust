@@ -185,15 +185,17 @@ fn make_attrib_string (config:&&JsonValue, name:&str, local_attribs_lst:&Vec<(St
 
 
 fn to_cmd (config:&&JsonValue, btag:&str, name:&str) -> String {
-  let value = &config[btag];
-  let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
+  let bvalue = &config[btag];
+  let satysfi_type_str = &bvalue["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
+  let value = &config[name];
+  let new_name = &value["rename"].as_str().unwrap_or(name);
   match satysfi_type {
-    SATySFiType::Normal(SATySFiTypeTerm::InlineText) => {format!("\\{}",name)}
-    SATySFiType::Normal(SATySFiTypeTerm::BlockText) => {format!("+{}",name)}
-    SATySFiType::List(SATySFiTypeTerm::InlineText) => {format!("\\{}",name)}
-    SATySFiType::List(SATySFiTypeTerm::BlockText) => {format!("+{}",name)}
-    _ => {name.to_string()}
+    SATySFiType::Normal(SATySFiTypeTerm::InlineText) => {format!("\\{}",new_name)}
+    SATySFiType::Normal(SATySFiTypeTerm::BlockText) => {format!("+{}",new_name)}
+    SATySFiType::List(SATySFiTypeTerm::InlineText) => {format!("\\{}",new_name)}
+    SATySFiType::List(SATySFiTypeTerm::BlockText) => {format!("+{}",new_name)}
+    _ => {new_name.to_string()}
   }
 }
 
