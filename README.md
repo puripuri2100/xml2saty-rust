@@ -1,4 +1,4 @@
-![](https://github.com/puripuri2100/xml2saty/workflows/CI/badge.svg)
+![](https://github.com/puripuri2100/xml2saty-rust/workflows/CI/badge.svg)
 
 
 # xml2saty-rust
