@@ -1,0 +1,65 @@
+@require: stdja
+
+let-inline \Ruby it = it
+let-inline ctx \Rt _ = inline-nil
+
+
+let law _ _ _ _ _ body = StdJa.document (|title = {法律}; author = {}; show-title = true; show-toc = false|) body
+
+let-block ctx +LawTitle it = read-inline ctx {LawTitle : #it;} ++ inline-fil |> line-break true true ctx
+
+let-block ctx +LawNum it = read-inline ctx {LawNum : #it;} ++ inline-fil |> line-break true true ctx
+
+let-block ctx +LawBody bt = read-block ctx bt
+
+let-block ctx +EnactStatement it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +TOC bt = block-nil
+
+let-block ctx +TOCLabel it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +TOCPart _ _ bt = read-block ctx bt
+
+let-block ctx +PartTitle it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +TOCChapter _ _ bt = read-block ctx bt
+
+let-block ctx +ChapterTitle it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +ArticleRange it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +MainProvision bt = read-block ctx bt
+
+let-block ctx +Part _ _ _ bt = read-block ctx bt
+
+let-block ctx +Chapter _ _ _ bt = read-block ctx bt
+
+let-block ctx +Article _ _ _ bt = read-block ctx bt
+
+let-block ctx +ArticleTitle it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +ArticleCaption it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +Paragraph b n bt = read-block ctx bt
+
+let-block ctx +ParagraphNum it = read-inline ctx {ParagraphNum : #it;} ++ inline-fil |> line-break true true ctx
+
+let-block ctx +ParagraphCaption it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +ParagraphSentence it = read-inline ctx {ParagraphSentence : #it;} ++ inline-fil |> line-break true true ctx
+
+let-block ctx +Sentence str it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-inline ctx \Sentence str it = read-inline ctx it
+
+let-block ctx +SupplProvision bt = read-block ctx bt
+
+let-block ctx +SupplProvisionLabel it = read-inline ctx {SupplProvisionLabel : #it;} ++ inline-fil |> line-break true true ctx
+
+let-block ctx +Item _ _ _ bt = read-block ctx bt
+
+let-block ctx +ItemTitle it = read-inline ctx it ++ inline-fil |> line-break true true ctx
+
+let-block ctx +ItemSentence bt = read-block ctx bt
+
+let-block ctx +Column bt = read-block ctx bt

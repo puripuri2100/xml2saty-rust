@@ -4,3 +4,7 @@ xml2saty
 xml2saty.exe
 Cargo.lock
 t
+*.saty
+*x2s-config
+*pdf
+*.satysfi-aux

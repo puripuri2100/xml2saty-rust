@@ -195,7 +195,7 @@ fn to_cmd (config:&&JsonValue, btag:&str, name:&str) -> String {
     SATySFiType::Normal(SATySFiTypeTerm::BlockText) => {format!("+{}",new_name)}
     SATySFiType::List(SATySFiTypeTerm::InlineText) => {format!("\\{}",new_name)}
     SATySFiType::List(SATySFiTypeTerm::BlockText) => {format!("+{}",new_name)}
-    _ => {new_name.to_string()}
+    _ => {new_name.to_string().to_lowercase()}
   }
 }
 

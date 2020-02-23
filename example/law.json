@@ -1,0 +1,169 @@
+{
+  "require": ["stdja"],
+  "import": ["local"],
+  "attrib":{
+    "Ruby":{
+      "type":"inline-text",
+      "attrib":[]
+    },
+    "Rt":{
+      "type":"inline-text",
+      "attrib":[]
+    },
+    "Law":{
+      "type":"block-text",
+      "len":5,
+      "attribs":[
+        "Era,string,1",
+        "Lang,string,2",
+        "LawType,string,3",
+        "Num,string,4",
+        "Year,int,5"
+      ]
+    },
+    "LawTitle":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "LawNum":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "LawBody":{
+      "type":"block-text",
+      "attribs":[]
+    },
+    "EnactStatement":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "TOC":{
+      "type":"block-text",
+      "attribs":[]
+    },
+    "TOCLabel":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "TOCPart":{
+      "type":"block-text",
+      "attribs":[
+        "Delete, bool, 1",
+        "Num, string, 2"
+      ]
+    },
+    "PartTitle":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "TOCChapter":{
+      "type":"block-text",
+      "attribs":[
+        "Delete, bool, 1",
+        "Num, string, 2"
+      ]
+    },
+    "ChapterTitle":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "PartChapter":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "ArticleRange":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+
+    "MainProvision":{
+      "type":"block-text",
+      "attribs":[]
+    },
+    "Part":{
+      "type":"block-text",
+      "attribs":[
+        "Delete, bool, 1",
+        "Num, string, 2",
+        "Hide, bool, 3"
+      ]
+    },
+    "Chapter":{
+      "type":"block-text",
+      "attribs":[
+        "Delete, bool, 1",
+        "Num, string, 2",
+        "Hide, bool, 3"
+      ]
+    },
+    "Article":{
+      "type":"block-text",
+      "attribs":[
+        "Delete, bool, 1",
+        "Num, string, 2",
+        "Hide, bool, 3"
+      ]
+    },
+    "ArticleTitle":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "ArticleCaption":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "Paragraph":{
+      "type":"block-text",
+      "attribs":[
+        "Hide,bool,2",
+        "Num,string,1"
+      ]
+    },
+    "ParagraphNum":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "ParagraphCaption":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "ParagraphSentence":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "Sentence":{
+      "type":"inline-text",
+      "attribs":[
+        "WritingMode, string, 1"
+      ]
+    },
+    "SupplProvision":{
+      "type":"block-text",
+      "attribs":[]
+    },
+    "SupplProvisionLabel":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "Item":{
+      "type":"block-text",
+      "attribs":[
+        "Delete, bool, 1",
+        "Hide, bool, 3",
+        "Num, string, 2"
+      ]
+    },
+    "ItemTitle":{
+      "type":"inline-text",
+      "attribs":[]
+    },
+    "ItemSentence":{
+      "type":"block-text",
+      "attribs":[]
+    },
+    "Column":{
+      "type":"block-text",
+      "attribs":[]
+    }
+  }
+}
