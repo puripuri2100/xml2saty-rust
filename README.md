@@ -6,7 +6,7 @@
 This software converts xml file to SATySFi's document file.
 
 
-# Install using OPAM
+# Install using Cargo
 
 Here is a list of minimally required softwares.
 
