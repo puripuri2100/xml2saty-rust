@@ -5,8 +5,8 @@ use std::io::BufReader;
 use xml::reader::{EventReader, XmlEvent};
 use xml::attribute;
 use std::vec;
-use json;
-use json::JsonValue;
+use serde_json::json;
+use serde_json::Value;
 
 
 #[derive(Debug)]
@@ -26,8 +26,8 @@ enum SATySFiType {
     List(SATySFiTypeTerm),
 }
 
-fn type_paren_l (config:&&JsonValue, tag:&str) -> String{
-  let value = &config[tag];
+fn type_paren_l (config:&&Value, tag:&str) -> String{
+  let value = get_attrib_value(&config,tag);
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
   match satysfi_type {
@@ -40,8 +40,8 @@ fn type_paren_l (config:&&JsonValue, tag:&str) -> String{
 }
 
 
-fn type_paren_r (config:&&JsonValue, tag:&str) -> String{
-  let value = &config[tag];
+fn type_paren_r (config:&&Value, tag:&str) -> String{
+  let value = get_attrib_value(&config,tag);
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
   match satysfi_type {
@@ -54,8 +54,8 @@ fn type_paren_r (config:&&JsonValue, tag:&str) -> String{
 }
 
 
-fn type_paren_l_lst (config:&&JsonValue, tag:&str) -> String{
-  let value = &config[tag];
+fn type_paren_l_lst (config:&&Value, tag:&str) -> String{
+  let value = get_attrib_value(&config,tag);
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
   match satysfi_type {
@@ -67,8 +67,8 @@ fn type_paren_l_lst (config:&&JsonValue, tag:&str) -> String{
 }
 
 
-fn type_paren_r_lst (config:&&JsonValue, tag:&str) -> String{
-  let value = &config[tag];
+fn type_paren_r_lst (config:&&Value, tag:&str) -> String{
+  let value = get_attrib_value(&config,tag);
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
   match satysfi_type {
@@ -90,8 +90,8 @@ fn type_paren (t:&SATySFiType, text:&str) -> String{
 }
 
 
-fn type_semicolon (config:&&JsonValue, btag:&str) -> String{
-  let value = &config[btag];
+fn type_semicolon (config:&&Value, btag:&str) -> String{
+  let value = get_attrib_value(&config,btag);
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
   match satysfi_type {
@@ -137,8 +137,10 @@ fn read_type (t:&&str) -> SATySFiType {
   }
 }
 
-fn is_list (config:&&JsonValue, btag:&str) -> bool {
-  let value = &config[btag];
+
+
+fn is_list (config:&&Value, btag:&str) -> bool {
+  let value = get_attrib_value(&config,btag);
   let satysfi_type_str = &value["type"].as_str().unwrap_or("function");
   let t = read_type(satysfi_type_str);
   match t {
@@ -147,27 +149,52 @@ fn is_list (config:&&JsonValue, btag:&str) -> bool {
   }
 }
 
-fn make_attrib_string (config:&&JsonValue, name:&str, local_attribs_lst:&Vec<(String, String)>) -> String {
-  let value = &config[name];
+
+
+
+fn get_attrib_value (config:&&Value, tag_name:&str) -> Value {
+  let mut stack = json!({});
+  for v in config.as_array().unwrap().iter() {
+    let tag = &v["tag"].as_str().unwrap_or("");
+    if &tag == &&tag_name {
+      stack = v.clone()
+    }
+  }
+  stack
+}
+
+
+
+fn make_attrib_string (config:&&Value, name:&str, local_attribs_lst:&Vec<(String, String)>) -> String {
+  let value = get_attrib_value(&config,name);
   let attribs = &value["attribs"];
-  let len = attribs.len();
-  let mut c:Vec<(&str,SATySFiType,usize)> = vec![];
-  for i in 0 .. len {
-    let hoge:Vec<&str> = attribs[i].as_str().unwrap_or("").split(',').collect();
-    let tag = hoge.iter().nth(0).unwrap_or(&"").trim();
-    let st = hoge.iter().nth(1).unwrap_or(&"function").trim();
+  let array_opt = attribs.as_array();
+  let attribs_a_len = match array_opt {
+    Some(a) => {a.len()}
+    None => {0}
+  };
+  let mut c:Vec<(&str,SATySFiType,u64)> = vec![];
+  for i in 0 .. attribs_a_len {
+    let tag = attribs[i]["tag"].as_str().unwrap_or(&"").trim();
+    let st = attribs[i]["type"].as_str().unwrap_or(&"function").trim();
     let t = read_type(&st);
-    let nm = hoge.iter().nth(2).unwrap_or(&"0").trim().parse().unwrap_or(0);
+    let nm = attribs[i]["num"].as_u64().unwrap_or(0);
     c.push((tag,t,nm));
   };
-  let len = value["len"].as_usize().unwrap_or(attribs.len());
+  let len_opt = value["len"].as_u64();
+  let len =
+    match len_opt {
+      Some(u) => {u as usize}
+      None => {attribs_a_len}
+    };
   let mut lst:Vec<Option<(&SATySFiType,String)>> = vec![None; len];
   let len = local_attribs_lst.len();
   for i in 0 .. len {
     let (tag,v) = &local_attribs_lst[i];
     let (_,t,n) = &mut c.iter().filter( |(x,_,_)| x == tag).next().unwrap_or(&("",SATySFiType::Normal(SATySFiTypeTerm::SATySFiFunction),0));
-    let _ = if n <= &0 {(None)} else {lst.remove(n - 1)};
-    let _ = if n <= &0 {()} else {lst.insert(n - 1, Some((t,v.to_string())))};
+    let n_usize = n.clone() as usize;
+    let _ = if n <= &0 {(None)} else {lst.remove(n_usize  - 1)};
+    let _ = if n <= &0 {()} else {lst.insert(n_usize  - 1, Some((t,v.to_string())))};
   };
   let len = lst.len();
   let mut c = String::new();
@@ -184,11 +211,11 @@ fn make_attrib_string (config:&&JsonValue, name:&str, local_attribs_lst:&Vec<(St
 }
 
 
-fn to_cmd (config:&&JsonValue, btag:&str, name:&str) -> String {
-  let bvalue = &config[btag];
+fn to_cmd (config:&&Value, btag:&str, name:&str) -> String {
+  let bvalue = get_attrib_value(&config,btag);
   let satysfi_type_str = &bvalue["type"].as_str().unwrap_or("function");
   let satysfi_type = read_type(satysfi_type_str);
-  let value = &config[name];
+  let value = get_attrib_value(&config,name);
   let new_name = &value["rename"].as_str().unwrap_or(name);
   match satysfi_type {
     SATySFiType::Normal(SATySFiTypeTerm::InlineText) => {format!("\\{}",new_name)}
@@ -218,7 +245,7 @@ fn escape (t:String) -> String {
 }
 
 
-pub fn xml2string (xml:BufReader<std::fs::File>, data:&JsonValue) -> String {
+pub fn xml2string (xml:BufReader<std::fs::File>, data:&Value) -> String {
 
   let config_attrib_lst = &data["attrib"];
 
@@ -231,6 +258,7 @@ pub fn xml2string (xml:BufReader<std::fs::File>, data:&JsonValue) -> String {
             Ok(XmlEvent::StartElement { name, attributes, .. }) => {
                 let local_attribs_lst = get_attributes(&attributes);
                 let name = format!("{}",name);
+                println!("start {}",name);
                 let a_s = make_attrib_string(&config_attrib_lst,&name ,&local_attribs_lst);
                 let btag = stack.iter().last().unwrap();
                 let cmd = &to_cmd(&config_attrib_lst,btag,&name);
@@ -244,6 +272,7 @@ pub fn xml2string (xml:BufReader<std::fs::File>, data:&JsonValue) -> String {
             }
             Ok(XmlEvent::EndElement { name }) => {
                 let name = format!("{}",name);
+                println!("end {}",name);
                 let _ = stack.pop();
                 let btag = stack.iter().last().unwrap();
                 let s = if is_list(&config_attrib_lst,&btag) {

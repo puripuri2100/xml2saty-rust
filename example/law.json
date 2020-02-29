@@ -1,169 +1,293 @@
 {
   "require": ["stdja"],
   "import": ["local"],
-  "attrib":{
-    "Ruby":{
+  "attrib":[
+    {
+      "tag": "Ruby",
       "type":"inline-text",
-      "attrib":[]
+      "attribs":[]
     },
-    "Rt":{
+    {
+      "tag" : "Rt",
       "type":"inline-text",
-      "attrib":[]
+      "attribs":[]
     },
-    "Law":{
+    {
+      "tag" : "Law",
       "type":"block-text",
       "len":5,
       "attribs":[
-        "Era,string,1",
-        "Lang,string,2",
-        "LawType,string,3",
-        "Num,string,4",
-        "Year,int,5"
+        {
+          "tag":"Era",
+          "type":"string",
+          "num": 1
+        },
+        {
+          "tag":"Lang",
+          "type":"string",
+          "num": 2
+        },
+        {
+          "tag":"LawType",
+          "type":"string",
+          "num": 3
+        },
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 4
+        },
+        {
+          "tag":"Year",
+          "type":"int",
+          "num": 5
+        }
       ]
     },
-    "LawTitle":{
+    {
+      "tag" : "LawTitle",
       "type":"inline-text",
       "attribs":[]
     },
-    "LawNum":{
+    {
+      "tag" : "LawNum",
       "type":"inline-text",
       "attribs":[]
     },
-    "LawBody":{
+    {
+      "tag" : "LawBody",
       "type":"block-text",
       "attribs":[]
     },
-    "EnactStatement":{
+    {
+      "tag" : "EnactStatement",
       "type":"inline-text",
       "attribs":[]
     },
-    "TOC":{
+    {
+      "tag": "TOC",
       "type":"block-text",
       "attribs":[]
     },
-    "TOCLabel":{
+    {
+      "tag" : "TOCLabel",
       "type":"inline-text",
       "attribs":[]
     },
-    "TOCPart":{
+    {
+      "tag": "TOCPart",
       "type":"block-text",
       "attribs":[
-        "Delete, bool, 1",
-        "Num, string, 2"
+        {
+          "tag":"Delete",
+          "type":"bool",
+          "num": 1
+        },
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 2
+        }
       ]
     },
-    "PartTitle":{
+    {
+      "tag" : "PartTitle",
       "type":"inline-text",
       "attribs":[]
     },
-    "TOCChapter":{
+    {
+      "tag" : "TOCChapter",
       "type":"block-text",
       "attribs":[
-        "Delete, bool, 1",
-        "Num, string, 2"
+        {
+          "tag":"Delete",
+          "type":"bool",
+          "num": 1
+        },
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 2
+        }
       ]
     },
-    "ChapterTitle":{
+    {
+      "tag" : "ChapterTitle",
       "type":"inline-text",
       "attribs":[]
     },
-    "PartChapter":{
+    {
+      "tag" : "PartChapter",
       "type":"inline-text",
       "attribs":[]
     },
-    "ArticleRange":{
+    {
+      "tag" : "ArticleRange",
       "type":"inline-text",
       "attribs":[]
     },
 
-    "MainProvision":{
+    {
+      "tag" : "MainProvision",
       "type":"block-text",
       "attribs":[]
     },
-    "Part":{
-      "type":"block-text",
-      "attribs":[
-        "Delete, bool, 1",
-        "Num, string, 2",
-        "Hide, bool, 3"
-      ]
-    },
-    "Chapter":{
+    {
+      "tag":"Part",
       "type":"block-text",
       "attribs":[
-        "Delete, bool, 1",
-        "Num, string, 2",
-        "Hide, bool, 3"
+        {
+          "tag":"Delete",
+          "type":"bool",
+          "num": 1
+        },
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 2
+        },
+        {
+          "tag":"Hide",
+          "type":"bool",
+          "num":3
+        }
       ]
     },
-    "Article":{
+    {
+      "tag" : "Chapter",
       "type":"block-text",
       "attribs":[
-        "Delete, bool, 1",
-        "Num, string, 2",
-        "Hide, bool, 3"
+        {
+          "tag":"Delete",
+          "type":"bool",
+          "num": 1
+        },
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 2
+        },
+        {
+          "tag":"Hide",
+          "type":"bool",
+          "num":3
+        }
       ]
     },
-    "ArticleTitle":{
-      "type":"inline-text",
-      "attribs":[]
-    },
-    "ArticleCaption":{
-      "type":"inline-text",
-      "attribs":[]
-    },
-    "Paragraph":{
+    {
+      "tag" : "Article",
       "type":"block-text",
       "attribs":[
-        "Hide,bool,2",
-        "Num,string,1"
+        {
+          "tag":"Delete",
+          "type":"bool",
+          "num": 1
+        },
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 2
+        },
+        {
+          "tag":"Hide",
+          "type":"bool",
+          "num":3
+        }
       ]
     },
-    "ParagraphNum":{
+    {
+      "tag" : "ArticleTitle",
       "type":"inline-text",
       "attribs":[]
     },
-    "ParagraphCaption":{
+    {
+      "tag" : "ArticleCaption",
       "type":"inline-text",
       "attribs":[]
     },
-    "ParagraphSentence":{
-      "type":"inline-text",
-      "attribs":[]
-    },
-    "Sentence":{
-      "type":"inline-text",
-      "attribs":[
-        "WritingMode, string, 1"
-      ]
-    },
-    "SupplProvision":{
-      "type":"block-text",
-      "attribs":[]
-    },
-    "SupplProvisionLabel":{
-      "type":"inline-text",
-      "attribs":[]
-    },
-    "Item":{
+    {
+      "tag" : "Paragraph",
       "type":"block-text",
       "attribs":[
-        "Delete, bool, 1",
-        "Hide, bool, 3",
-        "Num, string, 2"
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 1
+        },
+        {
+          "tag":"Hide",
+          "type":"bool",
+          "num":2
+        }
       ]
     },
-    "ItemTitle":{
+    {
+      "tag" : "ParagraphNum",
       "type":"inline-text",
       "attribs":[]
     },
-    "ItemSentence":{
+    {
+      "tag" : "ParagraphCaption",
+      "type":"inline-text",
+      "attribs":[]
+    },
+    {
+      "tag" : "ParagraphSentence",
+      "type":"inline-text",
+      "attribs":[]
+    },
+    {
+      "tag" : "Sentence",
+      "type":"inline-text",
+      "attribs":[
+        {
+          "tag": "WritingMode",
+          "type":"string",
+          "num":1
+        }
+      ]
+    },
+    {
+      "tag" : "SupplProvision",
       "type":"block-text",
       "attribs":[]
     },
-    "Column":{
+    {
+      "tag" : "SupplProvisionLabel",
+      "type":"inline-text",
+      "attribs":[]
+    },
+    {
+      "tag" : "Item",
+      "type":"block-text",
+      "len" : 3,
+      "attribs":[
+        {
+          "tag":"Num",
+          "type":"string",
+          "num": 1
+        },
+        {
+          "tag":"Hide",
+          "type":"bool",
+          "num":2
+        }
+      ]
+    },
+    {
+      "tag" : "ItemTitle",
+      "type":"inline-text",
+      "attribs":[]
+    },
+    {
+      "tag" : "ItemSentence",
+      "type":"block-text",
+      "attribs":[]
+    },
+    {
+      "tag" : "Column",
       "type":"block-text",
       "attribs":[]
     }
-  }
+  ]
 }
