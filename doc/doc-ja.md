@@ -1,4 +1,4 @@
-xml2saty v3.0.0
+xml2saty-rust
 
 # はじめに
 
