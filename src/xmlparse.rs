@@ -211,6 +211,22 @@ fn make_attrib_string (config:&&Value, name:&str, local_attribs_lst:&Vec<(String
 }
 
 
+fn top_lowercase (s:String) -> String {
+  let mut main_str = String::new();
+  let v: Vec<char> = s.chars().collect();
+  let len = v.len();
+  for i in 0 .. len {
+      if i == 0 {
+          let st = format!("{}",v[i]).to_lowercase();
+          main_str.push_str(&st)
+      } else {
+          let st = format!("{}",v[i]);
+          main_str.push_str(&st)
+      }
+  }
+  main_str
+}
+
 fn to_cmd (config:&&Value, btag:&str, name:&str) -> String {
   let bvalue = get_attrib_value(&config,btag);
   let satysfi_type_str = &bvalue["type"].as_str().unwrap_or("function");
@@ -222,7 +238,7 @@ fn to_cmd (config:&&Value, btag:&str, name:&str) -> String {
     SATySFiType::Normal(SATySFiTypeTerm::BlockText) => {format!("+{}",new_name)}
     SATySFiType::List(SATySFiTypeTerm::InlineText) => {format!("\\{}",new_name)}
     SATySFiType::List(SATySFiTypeTerm::BlockText) => {format!("+{}",new_name)}
-    _ => {new_name.to_string().to_lowercase()}
+    _ => {top_lowercase(new_name.to_string())}
   }
 }
 
