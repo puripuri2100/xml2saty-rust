@@ -187,7 +187,7 @@ fn make_attrib_string(
     ));
     let n_usize = n.clone() as usize;
     let _ = if n <= &0 {
-      (None)
+      None
     } else {
       lst.remove(n_usize - 1)
     };

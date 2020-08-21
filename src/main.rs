@@ -15,7 +15,7 @@ fn write_file(file_name: String, text: String) -> () {
 }
 
 fn main() {
-  let app = App::new("clapex")
+  let app = App::new("xml2saty-rust")
     .version("0.0.1")
     .arg(
       Arg::with_name("file")
